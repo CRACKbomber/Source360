@@ -55,6 +55,10 @@
       <Project>{49DC859C-7C60-4D89-9B82-E87DE542DF07}</Project>
       <Name>Source360.IO</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Source360.VTF\Source360.VTF.csproj">
+      <Project>{8D0EFD56-BE44-4343-A13C-7AE83346C7F4}</Project>
+      <Name>Source360.VTF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Source360.xZip\Source360.xZip.csproj">
       <Project>{5F2D9A25-8649-4FED-91B3-B6B238E0FE94}</Project>
       <Name>Source360.xZip</Name>

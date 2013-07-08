@@ -58,6 +58,7 @@
     <Compile Include="Compression\vLZMA.cs" />
     <Compile Include="Games\GameNames.cs" />
     <Compile Include="Helpers\ByteBufferHelpers.cs" />
+    <Compile Include="Helpers\EnumHelpers.cs" />
     <Compile Include="Helpers\MemoryStreamHelpers.cs" />
     <Compile Include="Helpers\NumberHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
