@@ -15,7 +15,7 @@ namespace Source360.Common.Security
         private IceSubKey[] m_dwKeySched;
         private class IceSubKey
         {
-            public ulong[] val = new ulong[3];
+            public ulong[] val = new ulong[3] { 0, 0, 0 };
         }
         /// <summary>
         /// S-boxes
@@ -24,7 +24,7 @@ namespace Source360.Common.Security
         /// <summary>
         /// Modulo values for the S-Boxes
         /// </summary>
-        private const int[,] m_ice_smod = new int[4, 4] 
+        private static int[,] m_ice_smod = new int[4, 4] 
         {
                 {333, 313, 505, 369},
 				{379, 375, 319, 391},
@@ -34,7 +34,7 @@ namespace Source360.Common.Security
         /// <summary>
         /// XOR values for the S-Boxes
         /// </summary>
-        private const int[,] m_ice_sxor = new int[4, 4]
+        private static int[,] m_ice_sxor = new int[4, 4]
         {
                 {0x83, 0x85, 0x9b, 0xcd},
 				{0xcc, 0xa7, 0xad, 0x41},
@@ -44,7 +44,7 @@ namespace Source360.Common.Security
         /// <summary>
         /// Permutation values for the P-Box
         /// </summary>
-        private static const ulong[] m_ice_pbox = new ulong[32]
+        private static  ulong[] m_ice_pbox = new ulong[32]
         {
             0x00000001, 0x00000080, 0x00000400, 0x00002000,
 		    0x00080000, 0x00200000, 0x01000000, 0x40000000,
@@ -58,7 +58,7 @@ namespace Source360.Common.Security
         /// <summary>
         /// ICE Key rotation schedule
         /// </summary>
-        private static const int[] m_ice_keyrot = new int[16]
+        private static int[] m_ice_keyrot = new int[16]
         {
             0, 1, 2, 3, 2, 1, 3, 0, 1, 3, 2, 0, 3, 1, 0, 2
         };
@@ -80,16 +80,8 @@ namespace Source360.Common.Security
                 this.m_dwRounds = level * 16;
             }
             this.m_dwKeySched = new IceSubKey[this.m_dwRounds];
-        }
-        /// <summary>
-        /// VICE Deconstructor
-        /// </summary>
-        public ~VICE()
-        {
             for (int i = 0; i < this.m_dwRounds; i++)
-                for (int j = 0; j < 3; j++)
-                    this.m_dwKeySched[i].val[j] = 0;
-            this.m_dwRounds = this.m_dwSize = 0;
+                this.m_dwKeySched[i] = new IceSubKey();
         }
         /// <summary>
         /// Decrypt ICE encrypted bytes
@@ -243,7 +235,7 @@ namespace Source360.Common.Security
             for (int i = this.m_dwRounds - 1; i > 0; i -= 2)
             {
                 l ^= ICE_F(r, ref this.m_dwKeySched[i]);
-                r ^= ICE_F(l, ref this.m_dwKeySched[i + 1]);
+                r ^= ICE_F(l, ref this.m_dwKeySched[i - 1]);
             }
             for (int i = 0; i < 4; i++)
             {
